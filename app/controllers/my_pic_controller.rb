@@ -3,13 +3,13 @@ class MyPicController < ApplicationController
   def create
     @pic = MyPic.create!(todo_params)
 
-    @url = generate_from_pic(@pic)
+    @content = generate_from_pic(@pic)
 
-    # extname = File.extname(filename)[1..-1]
-    # mime_type = Mime::Type.lookup_by_extension(extname)
-    # content_type = mime_type.to_s unless mime_type.nil?
-
-    render :plain => @url
+    send_data(
+        @content,
+        type: "image/#{@pic['format']}",
+        disposition: 'inline'
+    )
   end
   private
 
