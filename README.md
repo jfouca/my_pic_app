@@ -7,18 +7,36 @@ Things you may want to cover:
 
 * Ruby version
 
+    2.4.1
+
 * System dependencies
+
+    bundle install
 
 * Configuration
 
-* Database creation
+    sqlite3
 
 * Database initialization
 
+    rake db:create && rake db:migrate
+
 * How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
+    bundle exec rspec
 
 * Deployment instructions
 
-* ...
+    cap production deploy
+
+* Usage
+
+    curl -X POST \
+      http://13.58.36.156:3000/my_pic \
+      -H 'Content-Type: application/json' \
+      -d '{
+        "text": "Sample text",
+        "format": "png",
+        "height": 600,
+        "width": 800
+    }'
