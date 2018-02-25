@@ -7,14 +7,11 @@ describe 'POST /my_pic' do
         before { post '/my_pic', params: valid_attributes }
 
         it 'creates my_pic' do
-            expect(json['text']).to eq('Random text')
-            expect(json['format']).to eq('jpg')
-            expect(json['width']).to eq(100)
-            expect(json['height']).to eq(100)
+            expect(response.content_type).to eq 'image/jpg'
         end
 
-        it 'returns status code 201' do
-            expect(response).to have_http_status(201)
+        it 'returns status code 200' do
+            expect(response).to have_http_status(200)
         end
     end
 
@@ -27,7 +24,20 @@ describe 'POST /my_pic' do
 
         it 'returns a validation failure message' do
             expect(response.body)
-            .to match(/Validation failed: Text can't be blank, Format can't be blank, Width can't be blank, Height can't be blank/)
+            .to match(/Validation failed: Format is not included in the list, Format can't be blank, Width is not a number, Width can't be blank, Height is not a number, Height can't be blank, Text can't be blank/)
+        end
+    end
+
+    context 'when the request is has invalid parameters' do
+        before { post '/my_pic', params: { text: 'Random text', format: 'unknown', width: '-1', height: '-1' } }
+
+        it 'returns status code 422' do
+            expect(response).to have_http_status(422)
+        end
+
+        it 'returns a validation failure message' do
+            expect(response.body)
+            .to match(/Validation failed: Format is not included in the list, Width must be greater than or equal to 1, Height must be greater than or equal to 1/)
         end
     end
 end

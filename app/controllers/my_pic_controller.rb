@@ -1,4 +1,5 @@
 class MyPicController < ApplicationController
+    require 'faraday'
 
   def create
     @pic = MyPic.create!(todo_params)
@@ -18,7 +19,7 @@ class MyPicController < ApplicationController
   end
 
   def generate_from_pic(pic)
-    MyPicUrlService.new().generateFromPic(@pic)
+    MyPicUrlService.new(Faraday.new()).generateFromPic(@pic)
   end
 
 end
