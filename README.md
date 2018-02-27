@@ -7,7 +7,7 @@ Things you may want to cover:
 
 * Ruby version
 
-    2.4.1
+    2.5.0
 
 * System dependencies
 
@@ -25,14 +25,14 @@ Things you may want to cover:
 
     bundle exec rspec
 
-* Deployment instructions
+* Deployment instructions with Elastic beanstalk (see https://docs.aws.amazon.com/fr_fr/elasticbeanstalk/latest/dg/create_deploy_Ruby_rails.html)
 
-    cap production deploy
+    eb deploy
 
 * Usage
 
     curl -X POST \
-      http://13.58.36.156:3000/my_pic \
+      http://localhost:3000/my_pic \
       -H 'Content-Type: application/json' \
       -d '{
         "text": "Sample text",
