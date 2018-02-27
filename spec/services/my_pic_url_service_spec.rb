@@ -1,21 +1,20 @@
 require 'rails_helper'
 require 'faraday'
+require 'webmock/rspec'
+WebMock.disable_net_connect!(allow_localhost: true)
 
 RSpec.configure do |config|
-  config.mock_with :rspec do |mocks|
-    mocks.verify_partial_doubles = true
+  config.before(:each) do
+    stub_request(:get, /placehold.it/).to_return(
+        status: 200, body: "stubbed response", headers: {}
+      )
   end
 end
 
 RSpec.describe MyPicUrlService, type: :service do
     it 'initializes MyPicUrlService' do
-        faraday = Faraday::Adapter::Test::Stubs.new do |stub|
-          stub.get('toto') { |env| [200, {}, 'return_value'] }
-        end
-        pic = MyPic.new
-        service = MyPicUrlService.new(faraday)
-        allow(service).to receive(:generateUrl).with(pic).and_return('toto')
-        value = service.generateFromPic(pic)
-        expect(value).to eq 'return_value'
+        service = MyPicUrlService.new(Faraday.new)
+        value = service.generateFromPic(MyPic.new(width: 100, height: 100, format: "png"))
+        expect(value).to eq 'stubbed response'
     end
 end

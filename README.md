@@ -9,21 +9,13 @@ Things you may want to cover:
 
     2.5.0
 
-* System dependencies
-
-    bundle install
-
 * Configuration
 
-    sqlite3
-
-* Database initialization
-
-    rake db:create && rake db:migrate
+    make install
 
 * How to run the test suite
 
-    bundle exec rspec
+    make test
 
 * Deployment instructions with Elastic beanstalk (see https://docs.aws.amazon.com/fr_fr/elasticbeanstalk/latest/dg/create_deploy_Ruby_rails.html)
 
